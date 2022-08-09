@@ -61,3 +61,17 @@
   z-index: 1;
   position: absolute;
 }
+.Status__icon{
+  font-size: 1.9rem;
+  cursor: pointer;
+  color: rgb(83, 83, 83);
+}
+
+.Status__icon:hover{
+  color: rgb(65, 65, 65);
+  text-shadow: 0 0 20px black;
+}
+
+.c-pointer{
+  cursor: pointer;
+}

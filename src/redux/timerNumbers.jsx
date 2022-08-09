@@ -33,12 +33,16 @@ export const timerSlice = createSlice({
     },
 
     inputMinute: (state, { payload }) => {
-      localStorage.setItem("minute", payload);
-      state.changeMinute = +localStorage.getItem("minute");
+      if (payload >= 0) {
+        localStorage.setItem("minute", payload);
+        state.changeMinute = +localStorage.getItem("minute");
+      }
     },
     inputMinuteBT: (state, { payload }) => {
-      localStorage.setItem("minuteBT", payload);
-      state.changeMinuteBT = +localStorage.getItem("minuteBT");
+      if (payload >= 0) {
+        localStorage.setItem("minuteBT", payload);
+        state.changeMinuteBT = +localStorage.getItem("minuteBT");
+      }
     },
     localMinute: (state) => {
       const ls = localStorage.getItem("minute");
@@ -69,6 +73,6 @@ export const {
   handleMinute,
   handleMinuteBT,
   localMinute,
-  localMinuteBT
+  localMinuteBT,
 } = timerSlice.actions;
 export default timerSlice.reducer;

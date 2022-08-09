@@ -17,6 +17,7 @@ const Settings = () => {
       dispatch(handleClass("for__settings__main"))
     } else if (settings === 2) {
       setClassN("Settings pt-3 Settings__hide");
+      dispatch(handleClass("for__settings__main d-none"))
     }
   }, [settings]);
 

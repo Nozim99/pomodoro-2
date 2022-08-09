@@ -22,12 +22,16 @@ export const extraSlice = createSlice({
       state.item += payload;
       localStorage.setItem("item", state.item);
     },
+    deleteItems: (state)=>{
+      state.item = 0;
+      localStorage.setItem("item", 0);
+    },
     handleClass: (state, { payload }) => {
       state.className = payload;
     },
   },
 });
 
-export const { handleAsp, handleAsbt, handleItem, handleClass } =
+export const { handleAsp, handleAsbt, handleItem, handleClass, deleteItems } =
   extraSlice.actions;
 export default extraSlice.reducer;
