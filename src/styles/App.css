@@ -1,0 +1,155 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.Header {
+  background: #46e6ff;
+  min-height: 5rem;
+}
+.Header__logo__img {
+  width: 40px;
+}
+.Header__nav {
+  width: 96%;
+}
+.Header__setting_btn {
+  border: none;
+  background: #90f0ff;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.Header__setting_btn:hover {
+  background: #90f0ff;
+  border: 1px solid;
+}
+
+.Main__content {
+  background: #76edff;
+  width: 33rem;
+  min-height: 28rem;
+  border-radius: 20px;
+  border: 5px solid rgba(0, 0, 0, 0.158);
+  padding-bottom: 1rem;
+}
+.Main__content__BT {
+  background: #fdb5a3;
+}
+
+.TimerBtn__first,
+.TimerBtn__second {
+  border: 2px solid rgba(2, 2, 2, 0.295);
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.TimerBtn__first {
+  background-color: #87edfd;
+}
+.TimerBtn__second {
+  background-color: #fdc4b4;
+}
+.TimerBtn__second:hover {
+  background: #ffb39e;
+  border: 2px solid rgba(2, 2, 2, 0.596);
+}
+.TimerBtn__first:hover {
+  background-color: #64eaff;
+  border: 2px solid rgba(2, 2, 2, 0.596);
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Timer__num {
+  font-size: 8rem;
+  font-weight: bolder;
+}
+
+.Settings {
+  z-index: 3;
+  width: 30rem;
+  height: 25rem;
+  background-color: rgba(197, 197, 197, 0.945);
+  border-radius: 20px;
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid rgba(0, 0, 0, 0.301);
+}
+.Settings__show {
+  animation: showSettings 500ms ease-out forwards;
+}
+.Settings__hide {
+  animation: hideSettings 500ms ease-in forwards;
+}
+.Settings__input {
+  width: 5rem;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 12px;
+}
+
+@keyframes showSettings {
+  from {
+    top: -25%;
+  }
+  to {
+    top: 50%;
+  }
+}
+
+@keyframes hideSettings {
+  from {
+    top: 50%;
+  }
+  to {
+    top: -30%;
+  }
+}
+
+@media (max-width: 576px) {
+  .Settings{
+    width: 95%;
+  }
+  .Main__content{
+    width: 95%;
+  }
+  .Timer__num{
+    font-size: 6rem;
+  }
+  .Settings__auto__start__pomodoro{
+    left: 0;
+  }
+}

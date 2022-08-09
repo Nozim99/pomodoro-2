@@ -1,0 +1,63 @@
+.Settings__sound {
+  background-color: #94f1ff;
+  border-radius: 50%;
+  padding: 3px 6px;
+  border: 2px solid #1ee1ff;
+}
+.Settings__sound:hover {
+  background-color: #ecfdff;
+  border: 2px solid #00c4e2;
+}
+.Settings__sound__no {
+  background-color: #ffd9d9;
+  border-color: #f70e0ea1;
+}
+.Settings__sound__no:hover {
+  border-color: #f70e0ed7;
+  background-color: #fdfdfd;
+}
+.Settings__auto__start__pomodoro {
+  position: relative;
+  left: -4.2rem;
+}
+.Settings__auto__start__pomodoro__btn {
+  border-radius: 50%;
+  padding: 3px 6px;
+  border-color: #f70e0ea1;
+  background-color: #ffd9d9;
+}
+.Settings__auto__start__pomodoro__btn:hover {
+  border-color: #f70e0ed7;
+  background-color: #fdfdfd;
+}
+.Settings__auto__start__pomodoro__btn__on {
+  background-color: #94f1ff;
+  border: 2px solid #1ee1ff;
+}
+.Settings__auto__start__pomodoro__btn__on:hover {
+  background-color: #ecfdff;
+  border: 2px solid #00c4e2;
+}
+.Status__img{
+  width: 3rem;
+}
+
+
+.Status__x{
+  font-size: 2.5rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%, -50%);
+  opacity: 0;
+  
+}
+
+.Status__box:hover .Status__x{
+  opacity: 1;
+}
+.for__settings__main{
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  position: absolute;
+}
