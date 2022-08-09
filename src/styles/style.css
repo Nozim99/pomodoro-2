@@ -60,6 +60,14 @@
   height: 100vh;
   z-index: 1;
   position: absolute;
+
+}
+.for__fix__error{
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.089);
 }
 .Status__icon{
   font-size: 1.9rem;

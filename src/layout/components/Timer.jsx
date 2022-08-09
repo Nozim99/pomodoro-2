@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux";
 import {
@@ -14,7 +14,7 @@ import {
   pomodoroBtn,
   breakTimeBtn,
 } from "../../redux/buttons";
-import { handleItem } from "../../redux/extra";
+import { handleItem, startClas } from "../../redux/extra";
 import finishAudio from "../../sounds/finish.mp3";
 import startClockSound from "../../sounds/clock-sound.mp3";
 import sounds1 from "../../sounds/clock-sound1.mp3";
@@ -32,8 +32,7 @@ const Timer = () => {
     useSelector((store) => store.timerNumbers);
   const btn = useSelector((store) => store.buttons.start);
   const { sound, pomodoro } = useSelector((store) => store.buttons);
-  const { asp, asbt } = useSelector((state) => state.extra);
-  const [classN, setClassN] = useState("btn btn-primary mt-4");
+  const { asp, asbt, startClass } = useSelector((state) => state.extra);
 
   const startBtnn = () => {
     clockSound.play();
@@ -75,10 +74,10 @@ const Timer = () => {
       dispatch(addSecond(2));
       dispatch(breakTimeBtn());
       if (asbt) {
-        setClassN("btn btn-primary disabled mt-4");
+        dispatch(startClas("btn btn-primary disabled mt-4"));
         setTimeout(() => {
           startBtnn();
-          setClassN("btn btn-primary mt-4");
+          dispatch(startClas("btn btn-primary mt-4"));
         }, 3500);
       }
     }
@@ -86,17 +85,17 @@ const Timer = () => {
 
   useEffect(() => {
     if (minuteBT < 0) {
-      dispatch(handleItem(1))
+      dispatch(handleItem(1));
       finishSound.play();
       stopBtnn();
       dispatch(addMinuteBT(changeMinuteBT));
       dispatch(addSecond(2));
       dispatch(pomodoroBtn());
       if (asp) {
-        setClassN("btn btn-primary disabled mt-4");
+        dispatch(startClas("btn btn-primary disabled mt-4"));
         setTimeout(() => {
           startBtnn();
-          setClassN("btn btn-primary mt-4");
+          dispatch(startClas("btn btn-primary mt-4"));
         }, 3500);
       }
     }
@@ -145,14 +144,14 @@ const Timer = () => {
         <span>{second < 10 ? `0${second}` : second}</span>
       </div>
 
-          <Status />
+      <Status />
 
       {!btn ? (
         <button onClick={stopBtnn} className="btn btn-danger mt-4">
           Stop
         </button>
       ) : (
-        <button onClick={startBtnn} className={classN}>
+        <button onClick={startBtnn} className={startClass}>
           Start
         </button>
       )}

@@ -3,27 +3,22 @@ import Main from "./layout/Main";
 import Settings from "./layout/components/Settings";
 import { showSettings } from "./redux/buttons";
 import { useDispatch, useSelector } from "react-redux";
-import {handleClass} from "./redux/extra"
+import { handleClass } from "./redux/extra";
 import { useEffect } from "react";
-import {localMinute, localMinuteBT} from "./redux/timerNumbers"
-import {handlerSound} from "./redux/buttons"
+import { localMinute, localMinuteBT } from "./redux/timerNumbers";
 
 function App() {
   const dispatch = useDispatch();
   const { className } = useSelector((state) => state.extra);
   const closeSettings = () => {
     dispatch(showSettings(2));
-    dispatch(handleClass("for__settings__main d-none"))
+    dispatch(handleClass("for__settings__main d-none"));
   };
 
-  useEffect(()=>{
-    dispatch(localMinute())
-    dispatch(localMinuteBT())
-    // const lsSound = localStorage.getItem("sound")
-    // if(lsSound){
-    //   dispatch(handlerSound(lsSound))
-    // }
-  }, [])
+  useEffect(() => {
+    dispatch(localMinute());
+    dispatch(localMinuteBT());
+  }, []);
 
   return (
     <div className="App">

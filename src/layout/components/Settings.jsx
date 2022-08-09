@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { inputMinuteBT, inputMinute } from "../../redux/timerNumbers";
 import { useDispatch, useSelector } from "react-redux";
 import { showSettings, handlerSound } from "../../redux/buttons";
-import { handleAsp, handleAsbt, handleClass } from "../../redux/extra";
+import { handleAsp, handleAsbt, handleClass, settingClas } from "../../redux/extra";
 
 const Settings = () => {
   const dispatch = useDispatch();
   const minutes = useSelector((store) => store.timerNumbers);
-  const [classN, setClassN] = useState("Settings pt-3 ");
   const { settings, sound } = useSelector((state) => state.buttons);
-  const { asp, asbt } = useSelector((state) => state.extra);
+  const { asp, asbt, settingClass } = useSelector((state) => state.extra);
 
   useEffect(() => {
     if (settings === 1) {
-      setClassN("Settings pt-3 Settings__show");
+      dispatch(settingClas("Settings pt-3 Settings__show"))
       dispatch(handleClass("for__settings__main"))
     } else if (settings === 2) {
-      setClassN("Settings pt-3 Settings__hide");
+      dispatch(settingClas("Settings pt-3 Settings__hide"))
       dispatch(handleClass("for__settings__main d-none"))
     }
   }, [settings]);
 
   return (
-    <div className={classN}>
+    <div className={settingClass}>
       <h1 className="mb-4">Settings</h1>
       <div>
         <span className="h5 me-2">Pomodoro: </span>{" "}
