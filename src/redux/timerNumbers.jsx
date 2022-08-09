@@ -12,13 +12,13 @@ export const timerSlice = createSlice({
   reducers: {
     addMinute: (state, { payload }) => {
       state.minute -= 1;
-      if (payload) {
+      if (payload || payload === 0) {
         state.minute = payload;
       }
     },
     addMinuteBT: (state, { payload }) => {
       state.minuteBT -= 1;
-      if (payload) {
+      if (payload || payload === 0) {
         state.minuteBT = payload;
       }
     },
