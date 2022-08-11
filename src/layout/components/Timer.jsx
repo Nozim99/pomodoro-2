@@ -39,7 +39,7 @@ const Timer = () => {
     dispatch(startBtn());
     interval.current = setInterval(() => {
       dispatch(addSecond(0));
-      if (!sound) {
+      if (sound === 2) {
         if (second % 2 === 0) {
           sound1.play();
         } else {
@@ -68,6 +68,7 @@ const Timer = () => {
 
   useEffect(() => {
     if (minute < 0) {
+      dispatch(handleItem(1));
       finishSound.play();
       stopBtnn();
       dispatch(addMinute(changeMinute));
@@ -85,7 +86,6 @@ const Timer = () => {
 
   useEffect(() => {
     if (minuteBT < 0) {
-      dispatch(handleItem(1));
       finishSound.play();
       stopBtnn();
       dispatch(addMinuteBT(changeMinuteBT));
@@ -114,7 +114,7 @@ const Timer = () => {
       clearInterval(interval.current);
       interval.current = setInterval(() => {
         dispatch(addSecond(0));
-        if (!sound) {
+        if (sound === 2) {
           if (second % 2 === 0) {
             sound1.play();
           } else {

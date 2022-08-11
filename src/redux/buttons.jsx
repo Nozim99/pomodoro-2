@@ -6,7 +6,7 @@ export const buttonsSlice = createSlice({
     start: true,
     pomodoro: true,
     settings: 0,
-    sound: +localStorage.getItem("sound"),
+    sound: +localStorage.getItem("sound") || 1,
   },
   reducers: {
     startBtn: (state) => {

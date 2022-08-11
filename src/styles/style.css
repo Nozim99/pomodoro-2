@@ -83,3 +83,13 @@
 .c-pointer{
   cursor: pointer;
 }
+.Settings__select{
+  padding: 7px 4px;
+  border-radius: 5px;  
+}
+
+@media (max-width: 375px) {
+  .Settings__select{
+    padding: 7px 0px;
+  }
+}

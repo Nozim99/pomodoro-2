@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import soundMute from "../sounds/soundMute.mp3";
+
+const musicSrc =
+  "https://storage.googleapis.com/studytogether-daily-dev/media-files/";
 // asp - Auto Start Pomodoro
 // asbt - Auto Start Break Time
 export const extraSlice = createSlice({
@@ -10,6 +14,8 @@ export const extraSlice = createSlice({
     className: "for__settings__main d-none",
     settingClass: "Settings pt-3 ",
     startClass: "btn btn-primary mt-4",
+    musicSelect: soundMute,
+    musicStatus: false,
   },
   reducers: {
     handleAsp: (state, { payload }) => {
@@ -37,7 +43,15 @@ export const extraSlice = createSlice({
     startClas: (state, { payload }) => {
       state.startClass = payload;
     },
-    
+    musicBtn: (state, { payload }) => {
+      state.musicStatus = payload;
+    },
+    changeMusic: (state, { payload }) => {
+      state.musicSelect = musicSrc + payload;
+      if (payload === "stop") {
+        state.musicSelect = soundMute;
+      }
+    },
   },
 });
 
@@ -49,5 +63,8 @@ export const {
   deleteItems,
   settingClas,
   startClas,
+  handleSelectMusic,
+  changeMusic,
+  musicBtn,
 } = extraSlice.actions;
 export default extraSlice.reducer;
