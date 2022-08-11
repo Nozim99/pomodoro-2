@@ -1,1 +1,1 @@
-try it on the web page: [Link](https://app.netlify.com/sites/pomodorouz/deploys)
+try it on the web page: [Link](https://pomodorouz.netlify.app/)
