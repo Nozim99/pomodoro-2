@@ -23,12 +23,12 @@ const Timer = () => {
   const interval = React.useRef();
   const { sound, pomodoro, start } = useSelector((store) => store.buttons);
   const { asp, asbt, startClass } = useSelector((state) => state.extra);
-  const { minute, minuteBT, inputMinute, inputMinuteBT, second } = useSelector((store) => store.timerNumbers);
-  const [bir, setBir] = useState(0)
-  const [ikki, setIkki] = useState(0)
+  const { minute, minuteBT, second } = useSelector((store) => store.timerNumbers);
+  const [auto, setAuto] = useState(true)
 
   const startF = () => {
     dispatch(startBtn(false))
+    clockSound.play()
     let end = pomodoro ? Math.floor(Date.now() / 1000) + minute * 60 + second : Math.floor(Date.now() / 1000) + minuteBT * 60 + second
     interval.current = setInterval(() => {
       dispatch(secondF((end - Math.floor(Date.now() / 1000)) % 60))
@@ -42,10 +42,16 @@ const Timer = () => {
           dispatch(handleItem(1))
           finishSound.play()
           dispatch(pomodoroBtn(false))
+          if(asbt){
+            setAuto(!auto)
+          }
         } else {
           dispatch(minuteBTF(0))
           finishSound.play()
           dispatch(pomodoroBtn(true))
+          if(asp){
+            setAuto(!auto)
+          }
         }
       }
     }, 100);
@@ -67,6 +73,9 @@ const Timer = () => {
     dispatch(minuteF(localStorage.getItem("minute") === null ? 50 : +localStorage.getItem("minute")))
     dispatch(minuteBTF(localStorage.getItem("minuteBT") === null ? 10 : localStorage.getItem("minuteBT")))
     dispatch(secondF(0))
+  }, [pomodoro])
+
+  useEffect(()=>{
     if(pomodoro){
       if(asp){
         startF()
@@ -76,7 +85,7 @@ const Timer = () => {
         startF()
       }
     }
-  }, [pomodoro])
+  }, [auto])
 
   useEffect(()=>{
     stopF()
