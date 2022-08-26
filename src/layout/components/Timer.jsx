@@ -1,18 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux";
-import {
-  addMinute,
-  addSecond,
-  addMinuteBT,
-  handleMinute,
-  handleMinuteBT,
-} from "../../redux/timerNumbers";
+import { secondF, inputMinuteBTF, inputMinuteF, minuteF, minuteBTF } from "../../redux/timerNumbers";
 import {
   startBtn,
-  stopBtn,
   pomodoroBtn,
-  breakTimeBtn,
 } from "../../redux/buttons";
 import { handleItem, startClas } from "../../redux/extra";
 import finishAudio from "../../sounds/finish.mp3";
@@ -20,6 +12,7 @@ import startClockSound from "../../sounds/clock-sound.mp3";
 import sounds1 from "../../sounds/clock-sound1.mp3";
 import sounds2 from "../../sounds/clock-sound2.mp3";
 import Status from "./Status";
+import { useState } from "react";
 
 const Timer = () => {
   const finishSound = new Audio(finishAudio);
@@ -28,109 +21,77 @@ const Timer = () => {
   const sound2 = new Audio(sounds2);
   const dispatch = useDispatch();
   const interval = React.useRef();
-  const { second, minute, minuteBT, changeMinute, changeMinuteBT } =
-    useSelector((store) => store.timerNumbers);
-  const btn = useSelector((store) => store.buttons.start);
-  const { sound, pomodoro } = useSelector((store) => store.buttons);
+  const { sound, pomodoro, start } = useSelector((store) => store.buttons);
   const { asp, asbt, startClass } = useSelector((state) => state.extra);
+  const { minute, minuteBT, inputMinute, inputMinuteBT, second } = useSelector((store) => store.timerNumbers);
+  const [bir, setBir] = useState(0)
+  const [ikki, setIkki] = useState(0)
 
-  const startBtnn = () => {
-    clockSound.play();
-    dispatch(startBtn());
+  const startF = () => {
+    dispatch(startBtn(false))
+    let end = pomodoro ? Math.floor(Date.now() / 1000) + minute * 60 + second : Math.floor(Date.now() / 1000) + minuteBT * 60 + second
     interval.current = setInterval(() => {
-      dispatch(addSecond(0));
-      if (sound === 2) {
-        if (second % 2 === 0) {
-          sound1.play();
+      dispatch(secondF((end - Math.floor(Date.now() / 1000)) % 60))
+      pomodoro ? dispatch(minuteF(Math.floor((end - Math.floor(Date.now() / 1000)) / 60) % 60))
+        : dispatch(minuteBTF(Math.floor((end - Math.floor(Date.now() / 1000)) / 60) % 60))
+      if (Math.floor(Date.now() / 1000) > end) {
+        dispatch(startBtn(true))
+        dispatch(secondF(0))
+        if (pomodoro) {
+          dispatch(minuteF(0))
+          dispatch(handleItem(1))
+          finishSound.play()
+          dispatch(pomodoroBtn(false))
         } else {
-          sound2.play();
+          dispatch(minuteBTF(0))
+          finishSound.play()
+          dispatch(pomodoroBtn(true))
         }
       }
-    }, 1000);
-  };
+    }, 100);
+  }
 
-  const stopBtnn = () => {
-    dispatch(stopBtn());
-    clearInterval(interval.current);
-  };
+  const stopF = () => {
+    dispatch(startBtn(true))
+    clearInterval(interval.current)
+  }
 
   useEffect(() => {
-    if (second < 0) {
-      if (pomodoro) {
-        dispatch(addSecond(1));
-        dispatch(addMinute());
+    if (start) {
+      clearInterval(interval.current)
+    }
+  }, [start])
+
+  useEffect(() => {
+    stopF()
+    dispatch(minuteF(localStorage.getItem("minute") === null ? 50 : +localStorage.getItem("minute")))
+    dispatch(minuteBTF(localStorage.getItem("minuteBT") === null ? 10 : localStorage.getItem("minuteBT")))
+    dispatch(secondF(0))
+    if(pomodoro){
+      if(asp){
+        startF()
+      }
+    } else {
+      if(asbt){
+        startF()
+      }
+    }
+  }, [pomodoro])
+
+  useEffect(()=>{
+    stopF()
+  }, [])
+
+  useEffect(() => {
+    if (sound === 2) {
+      if (second % 2 === 1) {
+        sound1.play()
       } else {
-        dispatch(addSecond(1));
-        dispatch(addMinuteBT());
+        sound2.play()
       }
     }
-  }, [second]);
+  }, [second])
 
-  useEffect(() => {
-    if (minute < 0) {
-      dispatch(handleItem(1));
-      finishSound.play();
-      stopBtnn();
-      dispatch(addMinute(changeMinute));
-      dispatch(addSecond(2));
-      dispatch(breakTimeBtn());
-      if (asbt) {
-        dispatch(startClas("btn btn-primary disabled mt-4"));
-        setTimeout(() => {
-          startBtnn();
-          dispatch(startClas("btn btn-primary mt-4"));
-        }, 3500);
-      }
-    }
-  }, [minute]);
-
-  useEffect(() => {
-    if (minuteBT < 0) {
-      finishSound.play();
-      stopBtnn();
-      dispatch(addMinuteBT(changeMinuteBT));
-      dispatch(addSecond(2));
-      dispatch(pomodoroBtn());
-      if (asp) {
-        dispatch(startClas("btn btn-primary disabled mt-4"));
-        setTimeout(() => {
-          startBtnn();
-          dispatch(startClas("btn btn-primary mt-4"));
-        }, 3500);
-      }
-    }
-  }, [minuteBT]);
-
-  useEffect(() => {
-    dispatch(handleMinute(changeMinute));
-  }, [changeMinute]);
-
-  useEffect(() => {
-    dispatch(handleMinuteBT(changeMinuteBT));
-  }, [changeMinuteBT]);
-
-  useEffect(() => {
-    if (!btn) {
-      clearInterval(interval.current);
-      interval.current = setInterval(() => {
-        dispatch(addSecond(0));
-        if (sound === 2) {
-          if (second % 2 === 0) {
-            sound1.play();
-          } else {
-            sound2.play();
-          }
-        }
-      }, 1000);
-    }
-  }, [sound]);
-
-  useEffect(() => {
-    stopBtnn();
-    dispatch(addMinuteBT(changeMinuteBT));
-    dispatch(addSecond(2));
-    dispatch(addMinute(changeMinute));
-  }, [pomodoro]);
 
   return (
     <div className="Timer">
@@ -146,13 +107,14 @@ const Timer = () => {
 
       <Status />
 
-      {!btn ? (
-        <button onClick={stopBtnn} className="btn btn-danger mt-4">
-          Stop
-        </button>
-      ) : (
-        <button onClick={startBtnn} className={startClass}>
+      {start ? (
+        <button onClick={startF} className={startClass}>
           Start
+        </button>
+
+      ) : (
+        <button onClick={stopF} className="btn btn-danger mt-4">
+          Stop
         </button>
       )}
     </div>

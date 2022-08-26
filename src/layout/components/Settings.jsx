@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { inputMinuteBT, inputMinute } from "../../redux/timerNumbers";
+import { inputMinuteF, inputMinuteBTF } from "../../redux/timerNumbers";
 import { useDispatch, useSelector } from "react-redux";
 import { showSettings, handlerSound } from "../../redux/buttons";
 import {
@@ -13,7 +13,7 @@ import {
 
 const Settings = () => {
   const dispatch = useDispatch();
-  const minutes = useSelector((store) => store.timerNumbers);
+  const {minute, minuteBT} = useSelector((store) => store.timerNumbers);
   const { settings, sound } = useSelector((state) => state.buttons);
   const { asp, asbt, settingClass, musicSelect, musicStatus } = useSelector(
     (state) => state.extra
@@ -58,11 +58,11 @@ const Settings = () => {
       <div>
         <span className="h5 me-2">Pomodoro: </span>{" "}
         <input
-          onChange={(e) => dispatch(inputMinute(e.target.value))}
+          onChange={(e)=>dispatch(inputMinuteF(e.target.value))}
           defaultValue={
-            localStorage.getItem("minute")
-              ? localStorage.getItem("minute")
-              : minutes.changeMinute
+            localStorage.getItem("minute") === null
+              ? minute
+              : localStorage.getItem("minute")
           }
           className="Settings__input"
           type="number"
@@ -71,11 +71,11 @@ const Settings = () => {
       <div className="mt-3">
         <span className="h5 me-2">Break Time:</span>{" "}
         <input
-          onChange={(e) => dispatch(inputMinuteBT(e.target.value))}
+        onChange={(e) => dispatch(inputMinuteBTF(e.target.value))}
           defaultValue={
-            localStorage.getItem("minuteBT")
-              ? localStorage.getItem("minuteBT")
-              : minutes.changeMinuteBT
+            localStorage.getItem("minuteBT") === null
+              ? minuteBT
+              : localStorage.getItem("minuteBT")
           }
           className="Settings__input"
           type="number"

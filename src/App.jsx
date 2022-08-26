@@ -5,7 +5,7 @@ import { showSettings } from "./redux/buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { handleClass } from "./redux/extra";
 import { useEffect } from "react";
-import { localMinute, localMinuteBT } from "./redux/timerNumbers";
+import {  } from "./redux/timerNumbers";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,11 +14,7 @@ function App() {
     dispatch(showSettings(2));
     dispatch(handleClass("for__settings__main d-none"));
   };
-
-  useEffect(() => {
-    dispatch(localMinute());
-    dispatch(localMinuteBT());
-  }, []);
+  
 
   return (
     <div className="App">

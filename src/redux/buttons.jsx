@@ -9,17 +9,11 @@ export const buttonsSlice = createSlice({
     sound: +localStorage.getItem("sound") || 1,
   },
   reducers: {
-    startBtn: (state) => {
-      state.start = false;
+    startBtn: (state, {payload}) => {
+      state.start = payload;
     },
-    stopBtn: (state) => {
-      state.start = true;
-    },
-    pomodoroBtn: (state) => {
-      state.pomodoro = true;
-    },
-    breakTimeBtn: (state) => {
-      state.pomodoro = false;
+    pomodoroBtn: (state, {payload}) => {
+      state.pomodoro = payload;
     },
     showSettings: (state, { payload }) => {
       state.settings = payload;
@@ -33,9 +27,7 @@ export const buttonsSlice = createSlice({
 
 export const {
   startBtn,
-  stopBtn,
   pomodoroBtn,
-  breakTimeBtn,
   showSettings,
   handlerSound,
 } = buttonsSlice.actions;
