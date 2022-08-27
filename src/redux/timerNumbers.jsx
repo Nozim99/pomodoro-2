@@ -10,26 +10,30 @@ export const timerSlice = createSlice({
     inputMinuteBT: localStorage.getItem("minuteBT") === null ? 10 : localStorage.getItem("minuteBT")
   },
   reducers: {
-    minuteF: (state, {payload})=>{
+    minuteF: (state, { payload }) => {
       state.minute = payload
     },
-    minuteBTF: (state, {payload})=>{
+    minuteBTF: (state, { payload }) => {
       state.minuteBT = payload
     },
     inputMinuteF: (state, { payload }) => {
-      state.minute = payload
-      state.inputMinute = payload
-      localStorage.setItem("minute", payload)
+      if (payload >= 0) {
+        state.minute = payload
+        state.inputMinute = payload
+        localStorage.setItem("minute", payload)
+      }
     },
-    inputMinuteBTF: (state, {payload})=>{
-      state.minuteBT = payload
-      state.inputMinuteBT = payload
-      localStorage.setItem("minuteBT", payload)
+    inputMinuteBTF: (state, { payload }) => {
+      if (payload >= 0) {
+        state.minuteBT = payload
+        state.inputMinuteBT = payload
+        localStorage.setItem("minuteBT", payload)
+      }
     },
-    secondF: (state, {payload})=>{
+    secondF: (state, { payload }) => {
       state.second = payload
     }
   }
 });
-export const {inputMinuteF, inputMinuteBTF, secondF, minuteF, minuteBTF } = timerSlice.actions;
+export const { inputMinuteF, inputMinuteBTF, secondF, minuteF, minuteBTF } = timerSlice.actions;
 export default timerSlice.reducer;
