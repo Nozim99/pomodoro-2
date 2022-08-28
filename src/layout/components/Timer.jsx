@@ -28,7 +28,6 @@ const Timer = () => {
 
   const startF = () => {
     dispatch(startBtn(false))
-    clockSound.play()
     let end = pomodoro ? Math.floor(Date.now() / 1000) + minute * 60 + second : Math.floor(Date.now() / 1000) + minuteBT * 60 + second
     interval.current = setInterval(() => {
       dispatch(secondF((end - Math.floor(Date.now() / 1000)) % 60))
@@ -115,12 +114,11 @@ const Timer = () => {
       </div>
 
       <Status />
-
+{/*     clockSound.play() */}
       {start ? (
-        <button onClick={startF} className={startClass}>
+        <button onClick={()=>{clockSound.play();startF();}} className={startClass}>
           Start
         </button>
-
       ) : (
         <button onClick={stopF} className="btn btn-danger mt-4">
           Stop
